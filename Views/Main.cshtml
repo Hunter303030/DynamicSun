@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Weather>;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] DynamicSun</title>
+
+    <link rel="stylesheet" href="~/css/Main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Дата</td>
+                    <td>Время МСК</td>
+                    <td>Температура,°C</td>
+                    <td>Влажность, %</td>
+                    <td>Точка росы</td>
+                    <td>Давление, мм рт. ст.</td>
+                    <td>Направление ветра</td>
+                    <td>Скорость, м/с</td>
+                    <td>Облачность, %</td>
+                    <td>Ниж. гр. облачности</td>
+                    <td>Видимость</td>
+                    <td>Погодные яв.</td>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Date</td>
+                        <td>@item.Time</td>
+                        <td>@item.Temperature</td>
+                        <td>@item.Humidity</td>
+                        <td>@item.DewPoint</td>
+                        <td>@item.Pressure</td>
+                        <td>@item.WindDirection</td>
+                        <td>@item.WindSpeed</td>
+                        <td>@item.CloudCover</td>
+                        <td>@item.LBCloudCover</td>
+                        <td>@item.HorizontalVisibility</td>
+                        <td>@item.WeatherPhenomena</td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+
+
+
+    @*  <div class="container">
+    <div class="data__info">
+    <div class="info__item">#</div>
+    <div class="info__item">Дата</div>
+    <div class="info__item">Время МСК</div>
+    <div class="info__item">Температура,°C</div>
+    <div class="info__item">Влажность, %</div>
+    <div class="info__item">Точка росы</div>
+    <div class="info__item">Давление, мм рт. ст.</div>
+    <div class="info__item">Направление ветра</div>
+    <div class="info__item">Скорость, м/с</div>
+    <div class="info__item">Облачность, %</div>
+    <div class="info__item">Ниж. гр. облачности</div>
+    <div class="info__item">Видимость</div>
+    <div class="info__item">Погодные яв.</div>
+    </div>
+    </div>
+
+
+    @foreach (var item in Model)
+    {
+    <div class="container">
+    <div class="data__info">
+    <div class="info__item">@item.Id</div>
+    <div class="info__item">@item.Date</div>
+    <div class="info__item">@item.Time</div>
+    <div class="info__item">@item.Temperature</div>
+    <div class="info__item">@item.Humidity</div>
+    <div class="info__item">@item.DewPoint</div>
+    <div class="info__item">@item.Pressure</div>
+    <div class="info__item">@item.WindDirection</div>
+    <div class="info__item">@item.WindSpeed</div>
+    <div class="info__item">@item.CloudCover</div>
+    <div class="info__item">@item.LBCloudCover</div>
+    <div class="info__item">@item.HorizontalVisibility</div>
+    <div class="info__item">@item.WeatherPhenomena</div>
+    </div>
+    </div>
+    } *@
+</body>
+</html>
