@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Weather>;
+﻿@model PaginationList<Weather>;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +8,42 @@
 
     <link rel="stylesheet" href="~/css/Main.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="~/js/site.js"></script>
 </head>
 <body>
 
     <div class="container">
+        <div class="filter">
+            <form>
+                <select class="mySelect" name="selectInfo_Month">
+                    <option value="0">Выберите месяц</option>
+                    <option value="1">Январь</option>
+                    <option value="2">Февраль</option>
+                    <option value="3">Март</option>
+                    <option value="4">Апрель</option>
+                    <option value="5">Май</option>
+                    <option value="6">Июнь</option>
+                    <option value="7">Июль</option>
+                    <option value="8">Август</option>
+                    <option value="9">Сентябрь</option>
+                    <option value="10">Октябрь</option>
+                    <option value="11">Ноябрь</option>
+                    <option value="12">Декабрь</option>
+                </select>
+
+                <select class="mySelect" name="selectInfo_Years">
+                    <option value="0">Выберите год</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    
+                </select>
+
+                <input class="btn__search" type="submit" value="Найти" asp-action="SearchInfo" asp-controller="Weather" />
+            </form>
+        </div>
+
         <table class="table">
             <thead>
                 <tr>
@@ -25,15 +57,15 @@
                     <td>Направление ветра</td>
                     <td>Скорость, м/с</td>
                     <td>Облачность, %</td>
-                    <td>Ниж. гр. облачности</td>
-                    <td>Видимость</td>
+                    <td>Ниж. гр. облачности, м</td>
+                    <td>Видимость, км</td>
                     <td>Погодные яв.</td>
                 </tr>
             </thead>
-
-            @foreach (var item in Model)
+            @if (Model.Count() != 0)
             {
-                <tbody>
+                @foreach (var item in Model)
+                {
                     <tr>
                         <td>@item.Id</td>
                         <td>@item.Date</td>
@@ -49,51 +81,36 @@
                         <td>@item.HorizontalVisibility</td>
                         <td>@item.WeatherPhenomena</td>
                     </tr>
-                </tbody>
+                }
             }
+            else
+            {
+                <tr>
+                    <td>Список пуст</td>
+                </tr>
+            }
+
         </table>
-    </div>
 
+        @{
+            var prevDisable = !Model.PreviousPage ? "disabled" : "";
+            var nextDisable = !Model.NextPage ? "disabled" : "";           
+        }
 
-
-    @*  <div class="container">
-    <div class="data__info">
-    <div class="info__item">#</div>
-    <div class="info__item">Дата</div>
-    <div class="info__item">Время МСК</div>
-    <div class="info__item">Температура,°C</div>
-    <div class="info__item">Влажность, %</div>
-    <div class="info__item">Точка росы</div>
-    <div class="info__item">Давление, мм рт. ст.</div>
-    <div class="info__item">Направление ветра</div>
-    <div class="info__item">Скорость, м/с</div>
-    <div class="info__item">Облачность, %</div>
-    <div class="info__item">Ниж. гр. облачности</div>
-    <div class="info__item">Видимость</div>
-    <div class="info__item">Погодные яв.</div>
+        <a asp-action="List" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn__search @prevDisable"><</a>                           
+        <a asp-action="List" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn__search @nextDisable">></a>
+            
     </div>
-    </div>
-
-
-    @foreach (var item in Model)
-    {
-    <div class="container">
-    <div class="data__info">
-    <div class="info__item">@item.Id</div>
-    <div class="info__item">@item.Date</div>
-    <div class="info__item">@item.Time</div>
-    <div class="info__item">@item.Temperature</div>
-    <div class="info__item">@item.Humidity</div>
-    <div class="info__item">@item.DewPoint</div>
-    <div class="info__item">@item.Pressure</div>
-    <div class="info__item">@item.WindDirection</div>
-    <div class="info__item">@item.WindSpeed</div>
-    <div class="info__item">@item.CloudCover</div>
-    <div class="info__item">@item.LBCloudCover</div>
-    <div class="info__item">@item.HorizontalVisibility</div>
-    <div class="info__item">@item.WeatherPhenomena</div>
-    </div>
-    </div>
-    } *@
+    <script>
+        var select = document.getElementById("mySelect");
+        select.addEventListener("change", function () {
+            localStorage.setItem("selectedOption", this.value);
+            if (this.value) {
+                alert("Вы выбрали: " + this.value);
+            } else {
+                alert("Выберите опцию");
+            }
+        });
+    </script>
 </body>
 </html>

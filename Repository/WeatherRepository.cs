@@ -15,14 +15,36 @@ namespace DynamicSun.Repository
 
         public IEnumerable<Weather> List()
         {
-            IEnumerable<Weather> weathers = _context.Weather.ToList();
+            IEnumerable<Weather> weathers = _context.Weather;
             return weathers;
         }
 
         public void Add(Weather weather)
         {
-            _context.Weather.Add(weather);
-            _context.SaveChanges();
+            _context.Weather.AddAsync(weather);
+        }
+
+        public IEnumerable<Weather> Search(int selectInfo_Mounth, int selectInfo_Years)
+        {
+            IEnumerable<Weather> weathers = _context.Weather.Where(x=>x.Date.Year == selectInfo_Years && x.Date.Month == selectInfo_Mounth).ToList();
+            return weathers;
+        }
+
+        public IEnumerable<Weather> Search_Month(int selectInfo_Mounth)
+        {
+            IEnumerable<Weather> weathers = _context.Weather.Where(x => x.Date.Month == selectInfo_Mounth).ToList();
+            return weathers;
+        }
+
+        public IEnumerable<Weather> Search_Years(int selectInfo_Years)
+        {
+            IEnumerable<Weather> weathers = _context.Weather.Where(x => x.Date.Year == selectInfo_Years).ToList();
+            return weathers;
+        }
+
+        public void Save()
+        {
+            _context.SaveChangesAsync();
         }
     }
 }
