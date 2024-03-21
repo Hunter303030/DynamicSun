@@ -27,7 +27,6 @@
     align-items:center;
 }
 
-
 .btn__input {
     margin-right: 10px;
     border: none;
@@ -39,9 +38,6 @@
     transition: background .2s ease-in-out;
 }
 
-/*#419152
-    #337AB7
-*/
 .add__file[type=file]::file-selector-button {
     margin-right: 10px;
     border: none;

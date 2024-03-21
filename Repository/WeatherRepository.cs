@@ -21,7 +21,10 @@ namespace DynamicSun.Repository
 
         public void Add(Weather weather)
         {
-            _context.Weather.AddAsync(weather);
+            if(weather != null)
+            {
+                _context.Weather.Add(weather);
+            }
         }
 
         public IEnumerable<Weather> Search(int selectInfo_Mounth, int selectInfo_Years)
@@ -44,7 +47,7 @@ namespace DynamicSun.Repository
 
         public void Save()
         {
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

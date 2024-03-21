@@ -11,24 +11,21 @@ public class WeatherController : Controller
 {
     private readonly IWeatherRepository _weatherRepository;
     private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment _env;
-    private readonly DataContext _context;
 
-    public WeatherController(IWeatherRepository weatherRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment env,DataContext context)
+    public WeatherController(IWeatherRepository weatherRepository, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
     {
         _weatherRepository = weatherRepository;
         _env = env;
-        _context = context;
     }
 
     public async Task<IActionResult> List(int pageNumber = 1)
     {
         var weatherList = _weatherRepository.List();
-        return View("~/Views/Main.cshtml", await PaginationList<Weather>.CreateAsyns(weatherList, pageNumber,10));
+        return View("~/Views/Main.cshtml", await PaginationList<Weather>.CreateAsyns(weatherList, pageNumber, 10));
     }
 
     public IActionResult AddArchive(IEnumerable<IFormFile> fileArchive)
     {
-
         string dir = _env.ContentRootPath + "\\Archive";
         foreach (IFormFile item in fileArchive)
         {
@@ -85,12 +82,8 @@ public class WeatherController : Controller
         }
     }
 
-
-
-    public void InsertToDb(int numberOfSheets, IWorkbook workbook)
+    private void InsertToDb(int numberOfSheets, IWorkbook workbook)
     {
-
-
         DataFormatter formatter = new DataFormatter();
         for (int i = 0; i < numberOfSheets; i++)
         {
@@ -120,7 +113,8 @@ public class WeatherController : Controller
                     _weatherRepository.Add(newWeather);
                 }
                 catch (Exception ex)
-                {                    
+                {
+                    Console.WriteLine($"================================================================================\n{ex}\n================================================================================");
                 }
             }
         }
