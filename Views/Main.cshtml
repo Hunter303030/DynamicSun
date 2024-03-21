@@ -7,12 +7,11 @@
     <title>@ViewData["Title"] DynamicSun</title>
 
     <link rel="stylesheet" href="~/css/Main.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <script src="~/js/site.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
 </head>
 <body>
 
-    <div class="container">
+    <div class="container">        
         <div class="filter">
             <form>
                 <select class="mySelect" name="selectInfo_Month">
@@ -90,15 +89,12 @@
                 </tr>
             }
 
-        </table>
+        </table>        
 
-        @{
-            var prevDisable = !Model.PreviousPage ? "disabled" : "";
-            var nextDisable = !Model.NextPage ? "disabled" : "";           
-        }
-
-        <a asp-action="List" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn__search @prevDisable"><</a>                           
-        <a asp-action="List" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn__search @nextDisable">></a>
+        <div class="btn__navigation">
+            <a asp-action="List" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn__nav"> ← </a>
+            <a asp-action="List" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn__nav"> → </a>
+        </div>
             
     </div>
     <script>

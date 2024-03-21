@@ -31,7 +31,7 @@ namespace DynamicSun.Models
         public static async Task<PaginationList<T>> CreateAsyns(IEnumerable<T> sourse, int pageIndex, int pageSize)
         {
             var count = sourse.Count();
-            var item = sourse.Skip((pageIndex-1)* pageSize).Take(pageSize).ToList();
+            var item = sourse.Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
             return new PaginationList<T>(item, count, pageIndex, pageSize);
         }
     }

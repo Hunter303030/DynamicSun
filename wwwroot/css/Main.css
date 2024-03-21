@@ -69,3 +69,20 @@
     transition: background .2s ease-in-out;
     text-decoration: none;
 }
+
+.btn__navigation
+{
+    display:flex;     
+}
+
+.btn__nav {   
+    padding: 8px 15px;
+    background-color: #084cdf;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    display: inline-block;
+}
