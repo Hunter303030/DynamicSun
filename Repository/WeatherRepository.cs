@@ -29,19 +29,29 @@ namespace DynamicSun.Repository
 
         public IEnumerable<Weather> Search(int selectInfo_Mounth, int selectInfo_Years)
         {
-            IEnumerable<Weather> weathers = _context.Weather.Where(x=>x.Date.Year == selectInfo_Years && x.Date.Month == selectInfo_Mounth).ToList();
-            return weathers;
-        }
-
-        public IEnumerable<Weather> Search_Month(int selectInfo_Mounth)
-        {
-            IEnumerable<Weather> weathers = _context.Weather.Where(x => x.Date.Month == selectInfo_Mounth).ToList();
-            return weathers;
-        }
-
-        public IEnumerable<Weather> Search_Years(int selectInfo_Years)
-        {
-            IEnumerable<Weather> weathers = _context.Weather.Where(x => x.Date.Year == selectInfo_Years).ToList();
+            IEnumerable<Weather> weathers;
+            if (selectInfo_Mounth != 0 && selectInfo_Years != 0)
+            {
+                weathers = _context.Weather.Where(x => x.Date.Year == selectInfo_Years && x.Date.Month == selectInfo_Mounth).ToList();
+            }
+            else
+            {
+                if(selectInfo_Mounth == 0 && selectInfo_Years == 0)
+                {
+                    weathers = _context.Weather.ToList();
+                }
+                else
+                {
+                    if (selectInfo_Mounth == 0)
+                    {
+                        weathers = _context.Weather.Where(x => x.Date.Year == selectInfo_Years).ToList();
+                    }
+                    else
+                    {
+                        weathers = _context.Weather.Where(x => x.Date.Month == selectInfo_Mounth).ToList();
+                    }
+                }                
+            }
             return weathers;
         }
 

@@ -67,10 +67,16 @@ public class WeatherController : Controller
                     if (current == " " || current == null)
                     {
                         if (q == 6 || q == 11)
+                        {
                             row.GetCell(q).SetCellValue("-");
+                            continue;
+                        }
 
-                        if (q == 10 || q == 7 || q == 8 || q == 9)
+                        if (q == 7 || q == 8 || q == 9 || q == 10)
+                        {
                             row.GetCell(q).SetCellValue("0");
+                            continue;
+                        }
                     }
                 }
             }
@@ -122,32 +128,11 @@ public class WeatherController : Controller
     }
 
 
-    public async Task<IActionResult> SearchInfo(int selectInfo_Month, int selectInfo_Years)
+    public IActionResult SearchInfo(int selectInfo_Month, int selectInfo_Years)
     {
-        if (selectInfo_Month != 0 && selectInfo_Years != 0)
-        {
-            var searchInfo = _weatherRepository.Search(selectInfo_Month, selectInfo_Years);
-            return View("~/Views/Main.cshtml", await PaginationList<Weather>.CreateAsyns(searchInfo, 1, 10));
-        }
-        else
-        {
-            if (selectInfo_Month == 0 && selectInfo_Years == 0)
-            {
-                return RedirectToAction("List", "Weather");
-            }
-            else
-            {
-                if (selectInfo_Month != 0)
-                {
-                    var searchInfo = _weatherRepository.Search_Month(selectInfo_Month);
-                    return View("~/Views/Main.cshtml", await PaginationList<Weather>.CreateAsyns(searchInfo, 1, 10));
-                }
-                else
-                {
-                    var searchInfo = _weatherRepository.Search_Years(selectInfo_Years);
-                    return View("~/Views/Main.cshtml", await PaginationList<Weather>.CreateAsyns(searchInfo, 1, 10));
-                }
-            }
-        }
+        var searchInfo = _weatherRepository.Search(selectInfo_Month, selectInfo_Years);
+        var cur = searchInfo.First();
+        int number = cur.Id / 10 + 1;        
+        return RedirectToAction("List", new { pageNumber = number});
     }
 }
